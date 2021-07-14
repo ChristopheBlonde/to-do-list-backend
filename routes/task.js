@@ -34,7 +34,11 @@ router.get("/task", isAuthorized, async (req, res) => {
     const arrTasks = [];
     for (let i = 0; i < tasks.tasks.length; i++) {
       upTask = await Task.findById({ _id: tasks.tasks[i].task });
-      arrTasks.push({ text: upTask.text, checkBox: upTask.checkBox });
+      arrTasks.push({
+        text: upTask.text,
+        checkBox: upTask.checkBox,
+        id: upTask.id,
+      });
     }
     res.status(200).json(arrTasks);
   } catch (error) {
