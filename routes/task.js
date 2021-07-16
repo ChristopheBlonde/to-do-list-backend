@@ -29,15 +29,15 @@ router.post("/task/add", isAuthorized, async (req, res) => {
 
 router.get("/task", isAuthorized, async (req, res) => {
   try {
-    const tasks = await User.findById({ _id: req.user._id });
+    const tasksToFind = await User.findById({ _id: req.user._id.toString() });
     let upTask;
     const arrTasks = [];
-    for (let i = 0; i < tasks.tasks.length; i++) {
-      upTask = await Task.findById({ _id: tasks.tasks[i].task });
+    for (let i = 0; i < tasksToFind.tasks.length; i++) {
+      upTask = await Task.findById({ _id: tasksToFind.tasks[i].task });
       arrTasks.push({
         text: upTask.text,
         checkBox: upTask.checkBox,
-        id: upTask.id,
+        _id: upTask._id,
       });
     }
     res.status(200).json(arrTasks);
